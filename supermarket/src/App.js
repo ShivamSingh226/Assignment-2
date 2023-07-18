@@ -13,6 +13,7 @@ import { useContext } from 'react';
 import { Store } from './Store';
 import CartScreen from './screens/CartScreen';
 import SignInScreen from './screens/SignInScreen';
+import SignUpScreen from './screens/SignUpScreen';
 import  NavDropdown  from 'react-bootstrap/NavDropdown';
 function App() {
   const { state,dispatch:ctxDispatch } = useContext(Store);
@@ -75,6 +76,7 @@ function App() {
               <Route path="/" element={<HomeScreen />} />
               <Route path="/cart" element={<CartScreen/>}/>
               <Route path="/signin" element={<SignInScreen/>}/>
+              <Route path="/signup" element={<SignUpScreen/>}/>
               <Route path="/shipping" element={<ShippingAddressScreen/>}/>
             </Routes>
           </Container>
