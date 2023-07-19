@@ -16,6 +16,7 @@ import SignInScreen from './screens/SignInScreen';
 import SignUpScreen from './screens/SignUpScreen';
 import  NavDropdown  from 'react-bootstrap/NavDropdown';
 import PaymentMethodScreen from './screens/PaymentMethodScreen';
+import PlaceOrderScreen from './screens/PlaceOrderScreen';
 function App() {
   const { state,dispatch:ctxDispatch } = useContext(Store);
   const { cart ,userInfo} = state;
@@ -69,7 +70,7 @@ function App() {
               )}
             </Container>
           </Navbar>
-          <Link to="/">Supermarket</Link>
+          {/* <Link to="/">Supermarket</Link> */}
         </header>
         <main>
           <Container className="mt-3">
@@ -81,6 +82,7 @@ function App() {
               <Route path="/signup" element={<SignUpScreen/>}/>
               <Route path="/shipping" element={<ShippingAddressScreen/>}/>
               <Route path="/payment" element={<PaymentMethodScreen/>}/>
+              <Route path="/placeorder" element={<PlaceOrderScreen/>}/>
             </Routes>
           </Container>
         </main>
