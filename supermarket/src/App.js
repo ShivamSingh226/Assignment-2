@@ -11,6 +11,7 @@ import Badge from 'react-bootstrap/Badge';
 import Nav from 'react-bootstrap/Nav';
 import { useContext } from 'react';
 import { Store } from './Store';
+import OrderScreen from './screens/OrderScreen';
 import CartScreen from './screens/CartScreen';
 import SignInScreen from './screens/SignInScreen';
 import SignUpScreen from './screens/SignUpScreen';
@@ -83,6 +84,7 @@ function App() {
               <Route path="/shipping" element={<ShippingAddressScreen/>}/>
               <Route path="/payment" element={<PaymentMethodScreen/>}/>
               <Route path="/placeorder" element={<PlaceOrderScreen/>}/>
+              <Route path="/order/:id" element={<OrderScreen/>}/>
             </Routes>
           </Container>
         </main>
