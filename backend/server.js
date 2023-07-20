@@ -22,6 +22,9 @@ app.use('/api/orders',orderRouter)
 app.use((err,req,res,next)=>{
   res.status(500).send({message:err.message})
 })
+app.get('/api/keys/paypal',(req,res)=>{
+  res.send(process.env.PAYPAL_CLIENT_ID||'sb')
+})
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
   console.log(`serve at http://localhost:${port}`);
