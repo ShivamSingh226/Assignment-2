@@ -19,6 +19,7 @@ import  NavDropdown  from 'react-bootstrap/NavDropdown';
 import PaymentMethodScreen from './screens/PaymentMethodScreen';
 import PlaceOrderScreen from './screens/PlaceOrderScreen';
 import OrderHistoryScreen from './screens/OrderHistoryScreen';
+import ProfileScreen from './screens/ProfileScreen';
 function App() {
   const { state,dispatch:ctxDispatch } = useContext(Store);
   const { cart ,userInfo} = state;
@@ -27,6 +28,8 @@ function App() {
     localStorage.removeItem('userInfo')
     localStorage.removeItem('shippingAddress')
     localStorage.removeItem('paymentMethod')
+    localStorage.removeItem('cartItems')
+    window.location.href='/signin'
   }
   return (
     <BrowserRouter>
@@ -86,11 +89,13 @@ function App() {
               <Route path="/cart" element={<CartScreen/>}/>
               <Route path="/signin" element={<SignInScreen/>}/>
               <Route path="/signup" element={<SignUpScreen/>}/>
+              <Route path="/profile" element={<ProfileScreen/>}/>
               <Route path="/shipping" element={<ShippingAddressScreen/>}/>
               <Route path="/payment" element={<PaymentMethodScreen/>}/>
               <Route path="/placeorder" element={<PlaceOrderScreen/>}/>
               <Route path="/order/:id" element={<OrderScreen/>}/>
               <Route path="/orderhistory" element={<OrderHistoryScreen/>}/>
+              
             </Routes>
           </Container>
         </main>
