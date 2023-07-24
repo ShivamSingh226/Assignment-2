@@ -4,12 +4,12 @@ import ProductScreen from './screens/ProductScreen';
 import ShippingAddressScreen from './screens/ShippingAddressScreen';
 import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
-import {ToastContainer} from 'react-toastify'
+import {ToastContainer, toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { LinkContainer } from 'react-router-bootstrap';
 import Badge from 'react-bootstrap/Badge';
 import Nav from 'react-bootstrap/Nav';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Store } from './Store';
 import OrderScreen from './screens/OrderScreen';
 import CartScreen from './screens/CartScreen';
@@ -20,7 +20,27 @@ import PaymentMethodScreen from './screens/PaymentMethodScreen';
 import PlaceOrderScreen from './screens/PlaceOrderScreen';
 import OrderHistoryScreen from './screens/OrderHistoryScreen';
 import ProfileScreen from './screens/ProfileScreen';
+import { Button } from 'react-bootstrap';
+import { getError } from './utils';
+import SearchBox from './components/SearchBox';
+import axios from 'axios';
 function App() {
+  const[sidebarIsOpen,SetSidebarIsOpen]=useState(false);
+  const[categories,SetCategories]=useState([]);
+
+
+  useEffect(()=>{
+    const fetchCategories=async()=>{
+      try {
+        const {data}=await axios.get('/api/products/categories')
+        SetCategories(data);
+      } catch (err) {
+        toast.error(getError(err))
+      }
+    };
+    fetchCategories();
+
+  })
   const { state,dispatch:ctxDispatch } = useContext(Store);
   const { cart ,userInfo} = state;
   const signoutHandler=()=>{
@@ -33,17 +53,23 @@ function App() {
   }
   return (
     <HashRouter>
-      <div className="d-flex flex-column site-container">
+      <div className={sidebarIsOpen?"d-flex flex-column site-container active-cont":"d-flex flex-column site-container"}>
+       
         <ToastContainer position="bottom-center" limit={1}/>
         <header>
           <Navbar bg="dark" variant="dark" expand="lg">
             <Container>
+              <Button
+              variant="dark"
+              onClick={()=>SetSidebarIsOpen(!sidebarIsOpen)}>
+                <i className='fas fa-bars'></i>
+              </Button>
               <LinkContainer to="/">
                 <Navbar.Brand>Supermarket</Navbar.Brand>
               </LinkContainer>
               <Navbar.Toggle aria-controls="basic-navbar-nav"></Navbar.Toggle>
               <Navbar.Collapse id="basic-navbar-nav">
-
+               <SearchBox/> 
               <Nav className="me-auto  w-100  justify-content-end">
                 <Link to="/cart" className="nav-link">
                   Cart
@@ -81,6 +107,29 @@ function App() {
           </Navbar>
           {/* <Link to="/">Supermarket</Link> */}
         </header>
+        <div
+          className={
+            sidebarIsOpen
+              ? 'active-nav side-navbar d-flex justify-content-between flex-wrap flex-column'
+              : 'side-navbar d-flex justify-content-between flex-wrap flex-column'
+          }
+        >
+          <Nav className="flex-column text-white w-100 p-2">
+            <Nav.Item>
+              <strong>Categories</strong>
+            </Nav.Item>
+            {categories.map((category)=>(
+              <Nav.Item key={category}>
+                 <LinkContainer
+                  to={`/search/category=${category}`}
+                  onClick={() => SetSidebarIsOpen(false)}
+                >
+                  <Nav.Link>{category}</Nav.Link>
+                </LinkContainer>
+              </Nav.Item>
+            ))}
+          </Nav>
+          </div>
         <main>
           <Container className="mt-3">
             <Routes>
