@@ -1,4 +1,4 @@
-import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
+import { HashRouter, Link, Route, Routes } from 'react-router-dom';
 import HomeScreen from './screens/HomeScreen';
 import ProductScreen from './screens/ProductScreen';
 import ShippingAddressScreen from './screens/ShippingAddressScreen';
@@ -32,7 +32,7 @@ function App() {
     window.location.href='/signin'
   }
   return (
-    <BrowserRouter>
+    <HashRouter>
       <div className="d-flex flex-column site-container">
         <ToastContainer position="bottom-center" limit={1}/>
         <header>
@@ -103,7 +103,7 @@ function App() {
           <div className="text-center">All Rights Reserved</div>
         </footer>
       </div>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
