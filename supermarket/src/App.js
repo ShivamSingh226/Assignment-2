@@ -1,4 +1,4 @@
-import { HashRouter, Link, Route, Routes } from 'react-router-dom';
+import { HashRouter, Link, Route, Routes,BrowserRouter } from 'react-router-dom';
 import HomeScreen from './screens/HomeScreen';
 import ProductScreen from './screens/ProductScreen';
 import ShippingAddressScreen from './screens/ShippingAddressScreen';
@@ -24,6 +24,7 @@ import { Button } from 'react-bootstrap';
 import { getError } from './utils';
 import SearchBox from './components/SearchBox';
 import axios from 'axios';
+import SearchScreen from './screens/SearchScreen';
 function App() {
   const[sidebarIsOpen,SetSidebarIsOpen]=useState(false);
   const[categories,SetCategories]=useState([]);
@@ -52,7 +53,7 @@ function App() {
     window.location.href='/signin'
   }
   return (
-    <HashRouter>
+    <BrowserRouter>
       <div className={sidebarIsOpen?"d-flex flex-column site-container active-cont":"d-flex flex-column site-container"}>
        
         <ToastContainer position="bottom-center" limit={1}/>
@@ -121,7 +122,10 @@ function App() {
             {categories.map((category)=>(
               <Nav.Item key={category}>
                  <LinkContainer
-                  to={`/search/category=${category}`}
+                  to={{
+                    pathname:'/search',
+                    search:`category=${category}`
+                  }}
                   onClick={() => SetSidebarIsOpen(false)}
                 >
                   <Nav.Link>{category}</Nav.Link>
@@ -136,6 +140,7 @@ function App() {
               <Route path="/product/:slug" element={<ProductScreen />} />
               <Route path="/" element={<HomeScreen />} />
               <Route path="/cart" element={<CartScreen/>}/>
+              <Route path="/search" element={<SearchScreen/>}/>
               <Route path="/signin" element={<SignInScreen/>}/>
               <Route path="/signup" element={<SignUpScreen/>}/>
               <Route path="/profile" element={<ProfileScreen/>}/>
@@ -152,7 +157,7 @@ function App() {
           <div className="text-center">All Rights Reserved</div>
         </footer>
       </div>
-    </HashRouter>
+    </BrowserRouter>
   );
 }
 
